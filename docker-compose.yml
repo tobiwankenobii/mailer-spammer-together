@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  backend:
+    container_name: mailer-django
+    build:
+      context: ./server
+    volumes:
+      - ./server/:/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    env_file:
+      - ./.env.dev
+      - ./server/.env
+    stdin_open: true
+    tty: true
+
+  db:
+    container_name: mailer-postgres
+    restart: always
+    image: postgres:10.1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env.dev
+
+volumes:
+    postgres_data:
