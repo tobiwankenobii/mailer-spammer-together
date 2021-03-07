@@ -1,4 +1,4 @@
 .PHONY: test
 ## Run prettier
 lint:
-	yarn prettier src/
+	yarn prettier --write src/

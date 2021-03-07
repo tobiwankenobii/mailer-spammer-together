@@ -1,0 +1,97 @@
+import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
+import { AuthService, LoginData } from "../services/authService";
+import { AxiosError, AxiosResponse } from "axios";
+
+const { Text } = Typography;
+
+const LoginComponent = () => {
+    const { push } = useHistory();
+    const [errors, setErrors] = useState("");
+    const { saveTokens } = useAuth();
+
+    const handleSubmit = (credentials: LoginData) => {
+        AuthService.login(credentials)
+            .then((response: AxiosResponse) => {
+                saveTokens(response.data.access, response.data.refresh);
+                push("/");
+            })
+            .catch((error: AxiosError) => {
+                if (error.response) {
+                    const data = Object.values(error.response.data);
+                    setErrors(data.join(" "));
+                }
+            });
+    };
+
+    return (
+        <Row justify="space-around">
+            <Col span={6}>
+                <Card title="Log In">
+                    <Form onFinish={handleSubmit}>
+                        {errors ? (
+                            <Form.Item>
+                                <Text type="danger" strong>
+                                    {errors}
+                                </Text>
+                            </Form.Item>
+                        ) : (
+                            <></>
+                        )}
+                        <Form.Item
+                            name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please input your Username!",
+                                },
+                            ]}
+                        >
+                            <Input
+                                prefix={<UserOutlined />}
+                                placeholder="Username"
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please input your Password!",
+                                },
+                            ]}
+                        >
+                            <Input
+                                prefix={<LockOutlined />}
+                                type="password"
+                                placeholder="Password"
+                            />
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{ width: "100%" }}
+                            >
+                                Log in
+                            </Button>
+                            You don't have an account?{" "}
+                            <Button
+                                type="link"
+                                onClick={() => push("/register")}
+                            >
+                                Register now
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </Col>
+        </Row>
+    );
+};
+
+export default LoginComponent;
