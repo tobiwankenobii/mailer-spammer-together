@@ -1,16 +1,47 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Col, Layout, Row} from "antd";
+import PrivateRoute from "./components/PrivateRoute";
 import LoginComponent from "./components/Login";
 import RegisterComponent from "./components/Register";
-import PrivateRoute from "./components/PrivateRoute";
 import HomeView from "./views/HomeView";
+import NavbarComponent from "./components/Navbar";
+import CreateView from "./views/CreateView";
+
+const {Header, Content} = Layout;
 
 const App = () => {
     return (
         <BrowserRouter>
-            <Route path="/login" component={LoginComponent} />
-            <Route path="/register" component={RegisterComponent} />
-            <PrivateRoute path="/" exact={true} component={HomeView} />
+            <Layout style={{minHeight: "100vh"}}>
+                <NavbarComponent/>
+                <Layout>
+                    <Header className='site-layout-background' style={{padding: 0}}/>
+                    <Content style={{marginTop: "64px"}}>
+                        <div style={{padding: 24, minHeight: 360}}>
+                            <Row justify="space-around">
+                                <Col span={8}>
+                                    <Switch>
+                                        <Route path="/login" component={LoginComponent}/>
+                                        <Route path="/register" component={RegisterComponent}/>
+                                        <PrivateRoute
+                                            path="/"
+                                            exact={true}
+                                            component={HomeView}
+                                        />
+                                        <PrivateRoute
+                                            path="/create"
+                                            exact={false}
+                                            component={CreateView}
+                                        />
+
+                                    </Switch>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Content>
+                </Layout>
+            </Layout>
         </BrowserRouter>
     );
 };
