@@ -1,13 +1,13 @@
-import {Button, Card, Form, Input, Typography} from "antd";
-import {LockOutlined, UserOutlined} from "@ant-design/icons";
-import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
-import {useAuth} from "../context/AuthProvider";
-import {AuthService, LoginData} from "../services/authService";
-import {AxiosError, AxiosResponse} from "axios";
+import { Button, Card, Form, Input, Typography } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
+import { AuthService, LoginData } from "../services/authService";
+import { AxiosError, AxiosResponse } from "axios";
 import queryString from "query-string";
 
-const {Text} = Typography;
+const { Text } = Typography;
 
 interface Informations {
     registered: string;
@@ -19,10 +19,10 @@ const informations: Informations = {
 };
 
 const LoginComponent = () => {
-    const {push, location} = useHistory();
+    const { push, location } = useHistory();
     const [errors, setErrors] = useState("");
     const [info, setInfo] = useState("");
-    const {saveTokens} = useAuth();
+    const { saveTokens } = useAuth();
 
     const urlParams = queryString.parse(location.search);
     useEffect(() => {
@@ -78,10 +78,7 @@ const LoginComponent = () => {
                         },
                     ]}
                 >
-                    <Input
-                        prefix={<UserOutlined/>}
-                        placeholder="Username"
-                    />
+                    <Input prefix={<UserOutlined />} placeholder="Username" />
                 </Form.Item>
                 <Form.Item
                     name="password"
@@ -93,7 +90,7 @@ const LoginComponent = () => {
                     ]}
                 >
                     <Input
-                        prefix={<LockOutlined/>}
+                        prefix={<LockOutlined />}
                         type="password"
                         placeholder="Password"
                     />
@@ -103,15 +100,12 @@ const LoginComponent = () => {
                     <Button
                         type="primary"
                         htmlType="submit"
-                        style={{width: "100%"}}
+                        style={{ width: "100%" }}
                     >
                         Log in
                     </Button>
                     You don't have an account?{" "}
-                    <Button
-                        type="link"
-                        onClick={() => push("/register")}
-                    >
+                    <Button type="link" onClick={() => push("/register")}>
                         Register now
                     </Button>
                 </Form.Item>

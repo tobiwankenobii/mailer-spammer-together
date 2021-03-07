@@ -1,14 +1,14 @@
-import React, {useState} from "react";
-import {Button, Card, Form, Input, Typography} from "antd";
-import {LockOutlined, MailOutlined, UserOutlined} from "@ant-design/icons";
-import {useHistory} from "react-router-dom";
-import {AxiosError} from "axios";
-import {AuthService, RegisterData} from "../services/authService";
+import React, { useState } from "react";
+import { Button, Card, Form, Input, Typography } from "antd";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import { AxiosError } from "axios";
+import { AuthService, RegisterData } from "../services/authService";
 
-const {Text} = Typography;
+const { Text } = Typography;
 
 const RegisterComponent = () => {
-    const {push} = useHistory();
+    const { push } = useHistory();
     const [errors, setErrors] = useState("");
 
     const handleSubmit = (credentials: RegisterData) => {
@@ -44,10 +44,7 @@ const RegisterComponent = () => {
                         },
                     ]}
                 >
-                    <Input
-                        prefix={<UserOutlined/>}
-                        placeholder="Username"
-                    />
+                    <Input prefix={<UserOutlined />} placeholder="Username" />
                 </Form.Item>
                 <Form.Item
                     name="email"
@@ -58,10 +55,7 @@ const RegisterComponent = () => {
                         },
                     ]}
                 >
-                    <Input
-                        prefix={<MailOutlined/>}
-                        placeholder="Email"
-                    />
+                    <Input prefix={<MailOutlined />} placeholder="Email" />
                 </Form.Item>
                 <Form.Item
                     name="password"
@@ -73,7 +67,7 @@ const RegisterComponent = () => {
                     ]}
                 >
                     <Input
-                        prefix={<LockOutlined/>}
+                        prefix={<LockOutlined />}
                         type="password"
                         placeholder="Password"
                     />
@@ -83,7 +77,7 @@ const RegisterComponent = () => {
                     <Button
                         type="primary"
                         htmlType="submit"
-                        style={{width: "100%"}}
+                        style={{ width: "100%" }}
                     >
                         Sign Up
                     </Button>
